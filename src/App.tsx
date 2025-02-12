@@ -79,11 +79,9 @@ const createQuestions = (lang: LanguageCode): Question[] => [
           href="https://drive.google.com/file/d/1BuIeg1b40y228iNNUp9qaAAOgWMWae7T/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#b4854b] hover:text-[#8b6539] inline-flex items-center gap-1 text-sm sm:text-base"
+          className="text-[#b4854b] hover:text-[#8b6539] inline-flex items-center gap-1 text-sm sm:text-base font-light"
         >
-          {translations[lang].viewLink.click}{' '}
-          <span className="underline">{translations[lang].viewLink.here}</span>{' '}
-          {translations[lang].viewLink.toView} <ExternalLink className="w-4 h-4" />
+          {translations[lang].viewLink.click}{' '}{translations[lang].viewLink.here}{' '}{translations[lang].viewLink.toView} <ExternalLink className="w-4 h-4" />
         </a>
       </div>
     ),

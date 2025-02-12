@@ -3,108 +3,120 @@
 @tailwind utilities;
 
 body {
-  margin: 0;
-  font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  @apply bg-gray-50;
+	margin: 0;
+	font-family: "Raleway", -apple-system, BlinkMacSystemFont, "Segoe UI",
+		Roboto, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	@apply bg-gray-50;
 }
 
 ::selection {
-  @apply bg-purple-100;
+	@apply bg-purple-100;
 }
 
 /* Custom scrollbar styles */
 .scrollbar-thin {
-  scrollbar-width: thin;
+	scrollbar-width: thin;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
+	width: 6px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
+	background: transparent;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  @apply bg-gray-300;
-  border-radius: 3px;
+	@apply bg-gray-300;
+	border-radius: 3px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+	@apply bg-gray-400;
 }
 
 /* DatePicker custom styles */
 .react-datepicker-wrapper {
-  width: 100% !important;
+	width: 100% !important;
 }
 
 .react-datepicker {
-  @apply font-['Raleway'] bg-white border border-gray-200 rounded-lg shadow-lg !important;
+	@apply font-['Raleway'] bg-white border border-gray-200 rounded-lg shadow-lg !important;
 }
 
 .react-datepicker__header {
-  @apply bg-white border-gray-100 !important;
+	@apply bg-white border-gray-100 !important;
 }
 
 .react-datepicker__current-month,
 .react-datepicker__day-name {
-  @apply text-gray-900 font-medium text-sm sm:text-base !important;
+	@apply text-gray-900 font-medium text-sm sm:text-base !important;
 }
 
 .react-datepicker__day {
-  @apply text-gray-700 hover:bg-[#b4854b]/10 text-sm sm:text-base !important;
+	@apply text-gray-700 hover:bg-[#b4854b]/10 text-sm sm:text-base !important;
 }
 
 .react-datepicker__day--selected {
-  @apply bg-[#b4854b] text-white hover:bg-[#8b6539] !important;
+	@apply bg-[#b4854b] text-white hover:bg-[#8b6539] !important;
 }
 
 .react-datepicker__day--keyboard-selected {
-  @apply bg-[#b4854b]/20 text-[#b4854b] hover:bg-[#b4854b]/30 !important;
+	@apply bg-[#b4854b]/20 text-[#b4854b] hover:bg-[#b4854b]/30 !important;
 }
 
 .react-datepicker__day--disabled {
-  @apply text-gray-300 hover:bg-transparent cursor-not-allowed !important;
+	@apply text-gray-300 hover:bg-transparent cursor-not-allowed !important;
 }
 
 .react-datepicker__navigation-icon::before {
-  @apply border-gray-600 !important;
+	@apply border-gray-600 !important;
 }
 
 .react-datepicker__year-dropdown,
 .react-datepicker__month-dropdown {
-  @apply bg-white border border-gray-100 !important;
+	@apply bg-white border border-gray-100 !important;
 }
 
 .react-datepicker__year-option,
 .react-datepicker__month-option {
-  @apply text-gray-700 hover:bg-[#b4854b]/10 text-sm sm:text-base !important;
+	@apply text-gray-700 hover:bg-[#b4854b]/10 text-sm sm:text-base !important;
 }
 
 .react-datepicker__year-option--selected,
 .react-datepicker__month-option--selected {
-  @apply bg-[#b4854b] text-white !important;
+	@apply bg-[#b4854b] text-white !important;
 }
 
 .react-datepicker__year-option--selected_year,
 .react-datepicker__month-option--selected_month {
-  @apply text-[#b4854b] font-semibold !important;
+	@apply text-[#b4854b] font-semibold !important;
 }
 
 /* Remove the default input styles from react-datepicker */
 .react-datepicker__input-container input {
-  @apply border-none text-base sm:text-2xl !important;
+	@apply border-none text-base sm:text-2xl !important;
 }
 
 /* Hide the default calendar icon */
 .react-datepicker__calendar-icon {
-  @apply hidden !important;
+	@apply hidden !important;
 }
 
 /* Position the calendar dropdown */
 .react-datepicker-popper {
-  @apply z-50 !important;
+	@apply z-50 !important;
+}
+
+/* Custom focus outline styles */
+*:focus-visible {
+	outline: 2px solid #b4854b;
+	outline-offset: 2px;
+}
+
+/* Remove default focus styles for mouse users while preserving it for keyboard navigation */
+*:focus:not(:focus-visible) {
+	outline: none;
 }
