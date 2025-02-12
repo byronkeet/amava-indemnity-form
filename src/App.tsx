@@ -10,6 +10,8 @@ import { Select } from './components/Select';
 import { languages, translations, type LanguageCode } from './translations';
 import { supabase } from './lib/supabase';
 import { EmailCard } from './components/EmailCard';
+import naturalSelectionLogo from '/natural-selection-logo.png';
+import tuludiLogo from '/tuludi-logo.jpg';
 
 const createQuestions = (lang: LanguageCode): Question[] => [
   {
@@ -203,13 +205,22 @@ function App() {
   const progress = (currentQuestion / questions.length) * 100;
 
   const Logo = () => (
-    <div className="fixed top-4 left-4 sm:top-8 sm:left-8">
-      <img 
-        src="https://naturalselection.travel/wp-content/uploads/2024/05/Natural-Selection_RGB_Primary-Logo_Dark-Gold-2.png" 
-        alt="Natural Selection" 
-        className="h-12 sm:h-16"
-      />
-    </div>
+    <>
+      <div className="fixed top-4 left-4 sm:top-8 sm:left-8">
+        <img 
+          src={naturalSelectionLogo} 
+          alt="Natural Selection" 
+          className="h-12 sm:h-16"
+        />
+      </div>
+      <div className="fixed top-4 right-4 sm:top-8 sm:right-8">
+        <img 
+          src={tuludiLogo} 
+          alt="Tuludi" 
+          className="h-12 sm:h-16"
+        />
+      </div>
+    </>
   );
 
   if (isCompleted) {
