@@ -79,7 +79,7 @@ const createQuestions = (lang: LanguageCode): Question[] => [
       <div className="space-y-4">
         <p>{translations[lang].questions.termsAccepted}</p>
         <a
-          href="https://drive.google.com/file/d/1BuIeg1b40y228iNNUp9qaAAOgWMWae7T/view?usp=sharing"
+          href="/terms-and-conditions.jpeg"
           target="_blank"
           rel="noopener noreferrer"
           className="text-[#b4854b] hover:text-[#8b6539] inline-flex items-center gap-1 text-sm sm:text-base font-light"
