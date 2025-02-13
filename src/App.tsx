@@ -343,16 +343,11 @@ function App() {
                 placeholder={t.placeholders.birthday}
               />
             ) : currentQ.type === 'signature' ? (
-              <div className="space-y-3 sm:space-y-4 w-full">
-                <SignaturePad onSign={(signature) => setFormState(prev => ({ ...prev, [currentQ.id]: signature }))} />
-                <button
-                  onClick={() => handleNext(formState[currentQ.id])}
-                  className="w-full px-4 py-2 sm:px-6 sm:py-3 bg-[#b4854b] text-white rounded-lg 
-                           hover:bg-[#8b6539] transition-colors duration-200 text-sm sm:text-base"
-                  disabled={!formState[currentQ.id] || isSubmitting}
-                >
-                  {isSubmitting ? '...' : t.buttons.submit}
-                </button>
+              <div className="w-full max-w-2xl mx-auto px-4 sm:px-0">
+                <SignaturePad 
+                  onSign={(value) => setFormState(prev => ({ ...prev, [currentQ.id]: value }))} 
+                  clearText={t.buttons.clear}
+                />
               </div>
             ) : (
               <input

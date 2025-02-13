@@ -2,11 +2,13 @@ import React, { useRef, useState, useEffect } from 'react';
 
 interface SignaturePadProps {
   onSign: (signature: string) => void;
+  clearText: string;
 }
 
-export const SignaturePad: React.FC<SignaturePadProps> = ({ onSign }) => {
+export const SignaturePad: React.FC<SignaturePadProps> = ({ onSign, clearText }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [hasSignature, setHasSignature] = useState(false);
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
 
@@ -35,7 +37,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({ onSign }) => {
     return () => window.removeEventListener('resize', updateCanvasSize);
   }, []);
 
-  const getCoordinates = (e: React.MouseEvent | React.TouchEvent) => {
+  const getCoordinates = (event: React.MouseEvent | React.TouchEvent) => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
 
@@ -43,15 +45,15 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({ onSign }) => {
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
 
-    if ('touches' in e) {
+    if ('touches' in event) {
       return {
-        x: (e.touches[0].clientX - rect.left) * scaleX,
-        y: (e.touches[0].clientY - rect.top) * scaleY
+        x: (event.touches[0].clientX - rect.left) * scaleX,
+        y: (event.touches[0].clientY - rect.top) * scaleY
       };
     }
     return {
-      x: (e.clientX - rect.left) * scaleX,
-      y: (e.clientY - rect.top) * scaleY
+      x: (event.clientX - rect.left) * scaleX,
+      y: (event.clientY - rect.top) * scaleY
     };
   };
 
@@ -72,7 +74,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({ onSign }) => {
     if (!canvas || !ctx) return;
 
     const coords = getCoordinates(e);
-
+    
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
     ctx.lineTo(coords.x, coords.y);
@@ -80,13 +82,19 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({ onSign }) => {
 
     setLastX(coords.x);
     setLastY(coords.y);
+    setHasSignature(true);
   };
 
   const endDrawing = () => {
     setIsDrawing(false);
-    const canvas = canvasRef.current;
-    if (canvas) {
-      onSign(canvas.toDataURL());
+    if (hasSignature) {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const signature = canvas.toDataURL();
+        if (signature !== 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NgAAIAAAUAAR4f7BQAAAAASUVORK5CYII=') {
+          onSign(signature);
+        }
+      }
     }
   };
 
@@ -95,6 +103,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({ onSign }) => {
     const ctx = canvas?.getContext('2d');
     if (canvas && ctx) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      setHasSignature(false);
       onSign('');
     }
   };
@@ -109,19 +118,21 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({ onSign }) => {
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={endDrawing}
-          onMouseOut={endDrawing}
+          onMouseOut={() => setIsDrawing(false)}
           onTouchStart={startDrawing}
           onTouchMove={draw}
           onTouchEnd={endDrawing}
         />
       </div>
-      <button
-        onClick={clearSignature}
-        className="px-4 py-2 text-gray-600 hover:text-gray-900 bg-gray-100 
-                 hover:bg-gray-200 rounded-lg transition-colors duration-200 text-sm sm:text-base"
-      >
-        Clear Signature
-      </button>
+      <div>
+        <button
+          onClick={clearSignature}
+          className="px-4 py-2 text-gray-600 hover:text-gray-900 bg-gray-100 
+                   hover:bg-gray-200 rounded-lg transition-colors duration-200 text-sm sm:text-base"
+        >
+          {clearText}
+        </button>
+      </div>
     </div>
   );
 };
