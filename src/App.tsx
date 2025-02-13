@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Sparkles, ExternalLink } from 'lucide-react';
+import { PawPrint, ExternalLink } from 'lucide-react';
 import { Question, FormState, countries } from './types';
 import { QuestionCard } from './components/QuestionCard';
 import { ProgressBar } from './components/ProgressBar';
@@ -229,7 +229,7 @@ function App() {
       <div className="min-h-screen bg-white flex items-center justify-center p-4 sm:p-6">
         <Logo />
         <div className="text-center space-y-4 sm:space-y-6">
-          <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-[#b4854b] animate-pulse" />
+          <PawPrint className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-[#b4854b] animate-pulse" />
           <h1 className="text-2xl sm:text-4xl font-bold text-gray-900">
             {t.completion.title.replace('{name}', formState.fullName as string)}
           </h1>
