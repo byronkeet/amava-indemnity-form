@@ -12,6 +12,7 @@ import { supabase } from './lib/supabase';
 import { EmailCard } from './components/EmailCard';
 import naturalSelectionLogo from '/natural-selection-logo.png';
 import tuludiLogo from '/tuludi-logo.jpg';
+import { uploadSignature } from './utils/storage';
 
 const createQuestions = (lang: LanguageCode): Question[] => [
   {
@@ -103,6 +104,7 @@ function App() {
   const [isCompleted, setIsCompleted] = useState(false);
   const [language, setLanguage] = useState<LanguageCode>('en');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const questions = createQuestions(language);
 
   const handleBack = useCallback(() => {
@@ -128,33 +130,44 @@ function App() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from('indemnity').insert([
-        {
-          language,
-          full_name: formState.fullName as string,
-          email: formState.email as string,
-          nationality: formState.nationality as string,
-          birthday: formState.birthday as string,
-          id_number: formState.idNumber as string,
-          insurance: formState.insurance as string,
-          has_children: formState.hasChildren === true,
-          children_names: formState.hasChildren === true ? formState.childrenNames as string : null,
-          terms_accepted: formState.termsAccepted === true,
-          signature: formState.signature as string,
-        },
-      ]);
+      // Generate a unique ID for this submission
+      const submissionId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      // Get the signature from form state
+      const signatureBase64 = formState.signature as string;
+      
+      // Upload signature and get public URL
+      const signatureUrl = await uploadSignature(signatureBase64, submissionId);
 
-      if (error) {
-        console.error('Error submitting form:', error);
-        alert('There was an error submitting the form. Please try again.');
-        setIsSubmitting(false);
-        return;
-      }
+      // Create submission object with correct column names
+      const submission = {
+        language: language,
+        full_name: formState.fullName,
+        email: formState.email,
+        nationality: formState.nationality,
+        birthday: formState.birthday,
+        id_number: formState.idNumber,
+        insurance: formState.insurance,
+        has_children: formState.hasChildren,
+        children_names: formState.childrenNames,
+        terms_accepted: formState.termsAccepted,
+        signature: signatureUrl,
+      };
+
+      // Log the submission object for debugging
+      console.log('Submitting form with data:', submission);
+
+      // Submit form with signature URL instead of base64
+      const { error } = await supabase
+        .from('indemnity')
+        .insert([submission]);
+
+      if (error) throw error;
 
       setIsCompleted(true);
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('There was an error submitting the form. Please try again.');
+      console.error('Error:', error);
+      setSubmitError(true);
     } finally {
       setIsSubmitting(false);
     }
