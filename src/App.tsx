@@ -248,7 +248,7 @@ function App() {
           </h1>
           <p className="text-base sm:text-xl text-gray-600">{t.completion.subtitle}</p>
           <a
-            href="https://tripmate.co.za"
+            href="https://tuludi-assistant.amava.ai"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-4 py-2 sm:px-6 sm:py-3 bg-[#b4854b] text-white rounded-lg hover:bg-[#8b6539] transition-colors duration-200 text-sm sm:text-base"
